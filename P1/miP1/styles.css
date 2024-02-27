@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+  }
+  
+/* Crear columnas de ancho diferente que se colocan una a continuación de la otra */
+.columna {
+float: left;
+padding: 10px;
+min-height: 500px;
+}
+
+.izquierda {
+width: 50%;
+}
+
+.derecha {
+width: 50%;
+}
+
+/* Clear floats despues de las columnas para eliminar la superposición */
+.filla:after {
+content: "";
+display: table;
+clear: both;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: relative;     /*Agrega una posición relativa para poner la imagen*/
+}
+
+.profile-container {
+    position: relative;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+h1 {
+    margin: 0;
+}
+
+.about-me,
+.education,
+.experience,
+.skills,
+.contact {
+    margin: 20px;
+}
+
+h2 {
+    color: #6eb5e4;
+}
+
+h3 {
+    color: rgb(126, 143, 236);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    display: inline-block;
+    margin-right: 10px;
+    background-color:   #3498db;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 25px;
+}
+
+ul1 {
+    list-style-type: square, #3498db; /* 'disc', 'circle', etc. */
+}
+
+ul1 li {
+    margin-bottom: 8px; 
+    margin-left: 25px;
+}
