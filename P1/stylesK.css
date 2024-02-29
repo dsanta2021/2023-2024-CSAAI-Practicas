@@ -1,77 +1,77 @@
 /* Documento de estilo referido al currículum de Katniss Everdeen. */
 
 @font-face {
-    font-family: "Mockingjay";
-    src: url("mockingjay.ttf");
- }
- 
- body {
-   background-image: url("mocking.jpg");
-   background-size: cover;
-   color: #ffffff;
-   font-family: "Helvetica Neue", sans-serif;
- }
- 
- h1 {
-   font-family: "Mockingjay";
-   font-size: 50px;
-   text-align: center;
-   text-shadow: 2px 2px 4px #000000;
-   border: #bf2d00 10px double;
-   border-bottom: none;
-   padding: 10px;
-   margin: 50px;
-   margin-bottom: 0px;
- }
- 
- .cuerpo {
-   display: flex;
-   justify-content: space-between;
-   margin: 50px;
-   padding: 20px;
-   border: #bf2d00 10px double;
-   background-color: rgba(0, 0, 0, 0.5);
- }
- 
- main {
-   flex: 2;
-   border: #bf2d00 10px double;
-   margin-top: 0px;
-   padding: 20px;
-   background-color: rgba(0, 0, 0, 0.5);
- }
- 
- aside {
-   flex: 1;
-   border: #bf2d00 10px double;
-   margin: 0px;
-   padding: 20px;
-   text-align: justify;
-   background-color: rgba(0, 0, 0, 0.5);
- }
- 
- footer {
-   align-self: flex-end;
-   margin: 10px;
-   padding: 0px;
-   text-align: center;
-   margin-right: 50px;
-   opacity: 50%;
- }
- 
+  font-family: "Mockingjay";
+  src: url("mockingjay.ttf");
+}
+
+body {
+ background-image: url("mocking.jpg");
+ background-size: cover;
+ color: #ffffff;
+ font-family: "Helvetica Neue", sans-serif;
+}
+
+h1 {
+ font-family: "Mockingjay";
+ font-size: 50px;
+ text-align: center;
+ text-shadow: 2px 2px 4px #000000;
+ border: #bf2d00 10px double;
+ border-bottom: none;
+ padding: 10px;
+ margin: 50px;
+ margin-bottom: 0px;
+}
+
+.cuerpo {
+ display: flex;
+ justify-content: space-between;
+ margin: 50px;
+ padding: 20px;
+ border: #bf2d00 10px double;
+ background-color: rgba(0, 0, 0, 0.5);
+}
+
+main {
+ flex: 2;
+ border: #bf2d00 10px double;
+ margin-top: 0px;
+ padding: 20px;
+ background-color: rgba(0, 0, 0, 0.5);
+}
+
+aside {
+ flex: 1;
+ border: #bf2d00 10px double;
+ margin: 0px;
+ padding: 20px;
+ text-align: justify;
+ background-color: rgba(0, 0, 0, 0.5);
+}
+
+footer {
+ align-self: flex-end;
+ margin: 10px;
+ padding: 0px;
+ text-align: center;
+ margin-right: 50px;
+ opacity: 50%;
+}
+
 .mejores-escenas {
-    display: flex;
-    justify-content: space-around; /* Distribuye equitativamente el espacio horizontalmente */
-  }
-  
-  .mejores-escenas a {
-    flex: 1; /* Hace que cada imagen tenga un espacio igual */
-  }
-  
-  .mejores-escenas a img {
-    width: 150px; 
-    height: auto; 
-    margin: 5px; 
-  }
-  
+  display: flex;
+  justify-content: space-around; /* Distribuye equitativamente el espacio horizontalmente */
+}
+
+.mejores-escenas a {
+  flex: 1; /* Hace que cada imagen tenga un espacio igual */
+}
+
+.mejores-escenas a img {
+  width: 150px; 
+  height: auto; 
+  margin: 5px; 
+}
+
   
