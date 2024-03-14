@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.secret-key {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.counter {
+    font-size: 2em;
+    margin-top: 20px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.number-button {
+    font-size: 1.5em;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #1E90FF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-buttons {
+    margin-top: 20px;
+}
+
+#start-button, #stop-button, #reset-button {
+    font-size: 1.5em;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #FF6347;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
