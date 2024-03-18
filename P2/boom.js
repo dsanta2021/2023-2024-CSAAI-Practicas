@@ -6,7 +6,7 @@ const crono = new Crono(cronometroDisplay);
 let secretKey = [];
 let gameStarted = false;
 let gameFinished = false;
-let guessedState = [];      almacenar el estado de cada dígito (adivinado o no)
+let guessedState = [];      //almacenar el estado de cada dígito (adivinado o no)
 
 // Colores para los números de la clave secreta y los aciertos
 const secretColor = "#FF6347"; // Rojo
