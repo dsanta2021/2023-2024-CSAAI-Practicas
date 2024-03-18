@@ -6,7 +6,7 @@ const crono = new Crono(cronometroDisplay);
 let secretKey = [];
 let gameStarted = false;
 let gameFinished = false;
-let guessedState = [];      //almacenar el estado de cada dígito (adivinado o no)
+let guessedState = [];      // almacenar el estado de cada dígito (adivinado o no)
 
 // Obtener elementos del DOM
 const secretKeyDisplay = document.getElementById("secret-key-display");
