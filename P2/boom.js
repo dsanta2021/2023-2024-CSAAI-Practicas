@@ -8,10 +8,6 @@ let gameStarted = false;
 let gameFinished = false;
 let guessedState = [];      //almacenar el estado de cada dígito (adivinado o no)
 
-// Colores para los números de la clave secreta y los aciertos
-const secretColor = "#FF6347"; // Rojo
-const correctColor = "correct"; // Verde
-
 // Obtener elementos del DOM
 const secretKeyDisplay = document.getElementById("secret-key-display");
 const numberButtons = document.querySelectorAll(".numberButton");
