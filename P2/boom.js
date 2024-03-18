@@ -30,7 +30,7 @@ function updateSecretDisplay() {
         const digit = secretKey[i];
         if (guessedState[i]) {
             // Si el dígito está adivinado, mostrar en verde
-            displayHTML += '<span style="color: #00FF00;">' + secretKey[i] + '</span>';
+            displayHTML += '<span style="color: #03c8a8;">' + secretKey[i] + '</span>';
         } else {
             // De lo contrario, mostrar en rojo
             displayHTML += '<span style="color: #FF6347;">*</span>';
