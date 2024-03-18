@@ -6,7 +6,6 @@ const crono = new Crono(cronometroDisplay);
 let secretKey = [];
 let gameStarted = false;
 let gameFinished = false;
-let guessedState = [];      almacenar el estado de cada dígito (adivinado o no)
 
 // Colores para los números de la clave secreta y los aciertos
 const secretColor = "#FF6347"; // Rojo
@@ -19,6 +18,8 @@ const startButton = document.getElementById("start-button");
 const stopButton = document.getElementById("stop-button");
 const resetButton = document.getElementById("reset-button");
 
+// Variables para almacenar el estado de cada dígito (adivinado o no)
+let guessedState = [];
 
 // Función para generar la clave secreta aleatoria y el arreglo de estado
 function generateSecretKey() {
@@ -31,7 +32,6 @@ function generateSecretKey() {
 function updateSecretDisplay() {
     let displayHTML = "";
     for (let i = 0; i < secretKey.length; i++) {
-        const digit = secretKey[i];
         if (guessedState[i]) {
             // Si el dígito está adivinado, mostrar en verde
             displayHTML += '<span style="color: #00FF00;">' + secretKey[i] + '</span>';
@@ -47,10 +47,9 @@ function updateSecretDisplay() {
 function checkGuess(guess) {
     let found = false;
     for (let i = 0; i < secretKey.length; i++) {
-        if (secretKey[i] === guess && !guessedState[i]) {
+        if (secretKey[i] === guess) {
             guessedState[i] = true; // Marcar el dígito como adivinado
             found = true;
-            break;
         }
     }
     if (found) {
@@ -126,4 +125,3 @@ resetButton.addEventListener("click", function () {
 // Generar la clave secreta al cargar la página
 generateSecretKey();
 console.log("Clave secreta: " + secretKey);
-

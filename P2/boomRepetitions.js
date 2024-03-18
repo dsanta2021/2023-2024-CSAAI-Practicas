@@ -6,7 +6,6 @@ const crono = new Crono(cronometroDisplay);
 let secretKey = [];
 let gameStarted = false;
 let gameFinished = false;
-let guessedState = [];      almacenar el estado de cada dígito (adivinado o no)
 
 // Colores para los números de la clave secreta y los aciertos
 const secretColor = "#FF6347"; // Rojo
@@ -19,46 +18,35 @@ const startButton = document.getElementById("start-button");
 const stopButton = document.getElementById("stop-button");
 const resetButton = document.getElementById("reset-button");
 
-
-// Función para generar la clave secreta aleatoria y el arreglo de estado
+// Función para generar la clave secreta aleatoria
 function generateSecretKey() {
     secretKey = Array.from({ length: 4 }, () => Math.floor(Math.random() * 10));
-    guessedState = Array(secretKey.length).fill(false); // Inicializar todos los dígitos como no adivinados
-    updateSecretDisplay();
-}
-
-// Función para actualizar el display de la clave secreta
-function updateSecretDisplay() {
-    let displayHTML = "";
-    for (let i = 0; i < secretKey.length; i++) {
-        const digit = secretKey[i];
-        if (guessedState[i]) {
-            // Si el dígito está adivinado, mostrar en verde
-            displayHTML += '<span style="color: #00FF00;">' + secretKey[i] + '</span>';
-        } else {
-            // De lo contrario, mostrar en rojo
-            displayHTML += '<span style="color: #FF6347;">*</span>';
-        }
-    }
-    secretKeyDisplay.innerHTML = displayHTML;
+    secretKeyDisplay.textContent = secretKey.map(() => "*").join("");
+    secretKeyDisplay.style.color = secretColor;
 }
 
 // Función para comprobar si el dígito pulsado está en la clave secreta
 function checkGuess(guess) {
-    let found = false;
     for (let i = 0; i < secretKey.length; i++) {
-        if (secretKey[i] === guess && !guessedState[i]) {
-            guessedState[i] = true; // Marcar el dígito como adivinado
-            found = true;
-            break;
+        if (secretKey[i] === guess) {
+            secretKeyDisplay.textContent = secretKeyDisplay.textContent.substring(0, i) +
+                guess + secretKeyDisplay.textContent.substring(i + 1);
+
+            secretKey[i] = "_"; // Marcar el dígito como adivinado
+
+            if (secretKey.every(digit => digit === "_") && !gameFinished) {
+                crono.stop();
+                gameFinished = true;
+            }
+
+            // Se cambia el color del número acertado
+            let digit = secretKeyDisplay.textContent.split("");
+            digit[i] = '<span style="color: #00FF00;">' + guess + '</span>';
+            secretKeyDisplay.innerHTML = digit.join("");
+            
+            return;
+
         }
-    }
-    if (found) {
-        updateSecretDisplay(); // Actualizar el display solo si se encuentra el número
-    }
-    if (guessedState.every(state => state) && !gameFinished) {
-        crono.stop();
-        gameFinished = true;
     }
 }
 
@@ -126,4 +114,3 @@ resetButton.addEventListener("click", function () {
 // Generar la clave secreta al cargar la página
 generateSecretKey();
 console.log("Clave secreta: " + secretKey);
-

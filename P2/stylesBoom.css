@@ -30,7 +30,7 @@ body {
     margin-bottom: 20px;
 }
 
-.number-button {
+.numberButton {
     font-size: 1.5em;
     padding: 10px 20px;
     margin: 5px;
@@ -55,3 +55,5 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
+
+
