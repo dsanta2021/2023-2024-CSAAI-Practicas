@@ -1,25 +1,25 @@
 // Instanciar el objeto cronómetro
-const cronometroDisplay = document.getElementById("counter-display");
-const crono = new Crono(cronometroDisplay);
+var cronometroDisplay = document.getElementById("counter-display");
+var crono = new Crono(cronometroDisplay);
 
 // Variables para la clave secreta y el estado del juego
-let secretKey = [];
-let gameStarted = false;
-let gameFinished = false;
-let guessedState = [];      // almacenar el estado de cada dígito (adivinado o no)
+var secretKey = [];
+var gameStarted = false;
+var gameFinished = false;
+var guessedState = [];      // almacenar el estado de cada dígito (adivinado o no)
 
 // Obtener elementos del DOM
-const secretKeyDisplay = document.getElementById("secret-key-display");
-const numberButtons = document.querySelectorAll(".numberButton");
-const startButton = document.getElementById("start-button");
-const stopButton = document.getElementById("stop-button");
-const resetButton = document.getElementById("reset-button");
+var secretKeyDisplay = document.getElementById("secret-key-display");
+var numberButtons = document.querySelectorAll(".numberButton");
+var startButton = document.getElementById("start-button");
+var stopButton = document.getElementById("stop-button");
+var resetButton = document.getElementById("reset-button");
 
 
 // Función para generar la clave secreta aleatoria y el arreglo de estado
 function generateSecretKey() {
     secretKey = Array.from({ length: 4 }, () => Math.floor(Math.random() * 10));
-    guessedState = Array(secretKey.length).fill(false); // Inicializar todos los dígitos como no adivinados
+    guessedState = new Array(secretKey.length).fill(false); // Inicializar todos los dígitos como no adivinados
     updateSecretDisplay();
 }
 

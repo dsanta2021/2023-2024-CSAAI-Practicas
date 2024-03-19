@@ -15,10 +15,6 @@ body {
 .secret-key {
     font-size: 2.5em;
     margin-bottom: 20px;
-    background: linear-gradient(90deg, #2f81ec, #e64cde);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-animation-fill-color: transparent;
 }
 
 .counter {
@@ -104,16 +100,39 @@ body {
     cursor: pointer;
     background: linear-gradient(0deg, #f04d30 0%, #c55b48 100%);
     border: none;
-  }
-  #start-button:hover {
-    background: rgb(0,3,255);
+}
+
+#start-button:hover {
+    background: rgb(0, 3, 255);
     background: linear-gradient(0deg, rgb(241, 37, 1) 7%, rgb(248, 118, 95) 93%);
-    }
-  #stop-button:hover {
-    background: rgb(0,3,255);
+}
+
+#stop-button:hover {
+    background: rgb(0, 3, 255);
     background: linear-gradient(0deg, rgb(241, 37, 1) 7%, rgb(248, 118, 95) 93%);
+}
+
+#reset-button:hover {
+    background: rgb(0, 3, 255);
+    background: linear-gradient(0deg, rgb(241, 37, 1) 7%, rgb(248, 118, 95) 93%);
+}
+
+/* Breakpoint para dispositivos móviles */
+@media screen and (max-width: 500px) {
+    .container {
+        flex-direction: column;
     }
-  #reset-button:hover {
-     background: rgb(0,3,255);
-     background: linear-gradient(0deg, rgb(241, 37, 1) 7%, rgb(248, 118, 95) 93%);
+    .buttons {
+        margin: 10px auto; 
+        width: 100%; 
     }
+
+    .secret-key {
+        font-size: 1.5em;
+    }
+
+    .counter {
+        font-size: 1.2em;
+    }
+}
+

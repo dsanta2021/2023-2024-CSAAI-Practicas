@@ -59,6 +59,11 @@ footer {
  opacity: 50%;
 }
 
+.imagen img {
+  max-width: 100%;
+  height: auto;
+}
+
 .mejores-escenas {
   display: flex;
   justify-content: space-around; /* Distribuye equitativamente el espacio horizontalmente */
@@ -69,9 +74,51 @@ footer {
 }
 
 .mejores-escenas a img {
-  width: 150px; 
+  max-width: 80%; 
   height: auto; 
   margin: 5px; 
 }
 
+/* Breakpoint para dispositivos móviles */
+@media screen and (max-width: 600px) {
+  .cuerpo {
+    flex-direction: column;
+  }
+  
+  aside, main {
+    flex: 1;
+    margin: 10px auto;
+    width: 100%;
+  }
+
+  .imagen img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .mejores-escenas a img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 30px;
+    margin: 20px;
+  }
+
+  .parrafos p {
+    font-size: 16px;
+  }
+
+  footer {
+    margin: 10px;
+  }
+}
+
+/* Breakpoint para tablets */
+@media screen and (min-width: 601px) and (max-width: 800px) {
+  .cuerpo {
+    flex-direction: column;
+  }
+}
   
