@@ -1,7 +1,9 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #121212;
-    color: white;
+    background-image: url("boom.png");
+    background-repeat: no-repeat;
+    background-position: 15cm 8cm;
     text-align: center;
     margin-top: 150px;
 }
@@ -13,13 +15,15 @@ body {
 }
 
 .secret-key {
-    font-size: 2.5em;
+    font-size: 3em;
     margin-bottom: 20px;
+    color: #e4f120;
 }
 
 .counter {
-    font-size: 2em;
+    font-size: 2.5em;
     margin-top: 20px;
+    color: #96e4df;
 }
 
 .buttons {
@@ -119,6 +123,11 @@ body {
 
 /* Breakpoint para dispositivos móviles */
 @media screen and (max-width: 500px) {
+    body {
+        background-position: center bottom;
+        background-size: contain;
+        
+    }
     .container {
         flex-direction: column;
     }
