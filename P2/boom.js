@@ -55,7 +55,7 @@ function checkGuess(guess) {
     if (guessedState.every(state => state) && !gameFinished) {
         crono.stop();
         gameFinished = true;
-        alert("¡¡GENAIL!! ¡¡GANASTE!!\nCON UN Tiempo: " + cronometroDisplay.innerHTML);
+        //alert("¡¡GENAIL!! ¡¡GANASTE!!\nLa clave secreta era: "+ secretKey +" \nCon Un Tiempo: " + cronometroDisplay.innerHTML);
     }
 }
 
