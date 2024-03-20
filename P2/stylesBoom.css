@@ -1,9 +1,10 @@
 body {
-    font-family: Arial, sans-serif;
     background-color: #121212;
     background-image: url("boom.png");
     background-repeat: no-repeat;
-    background-position: 15cm 8cm;
+    background-position: center bottom;
+    background-size: contain;
+    background-position-y: 8cm;
     text-align: center;
     margin-top: 150px;
 }
@@ -15,15 +16,19 @@ body {
 }
 
 .secret-key {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    font-style: oblique;
     font-size: 3em;
-    margin-bottom: 20px;
     color: #e4f120;
 }
 
 .counter {
-    font-size: 2.5em;
-    margin-top: 20px;
-    color: #96e4df;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2.75em;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #3fbecf;
 }
 
 .buttons {
@@ -33,7 +38,7 @@ body {
 .numberButton {
     width: 90px;
     height: 50px;
-    border-radius: 5px;
+    border-radius: 15px;
     padding: 10px 25px;
     font-family: 'Lato', sans-serif;
     font-weight: 500;
@@ -64,7 +69,7 @@ body {
     bottom: 0;
     left: 0;
     z-index: -1;
-    border-radius: 5px;
+    border-radius: 15px;
     background-color: #4dccc6;
     background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
     box-shadow:
@@ -100,34 +105,29 @@ body {
     margin: 0 10px;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
-    background: linear-gradient(0deg, #f04d30 0%, #c55b48 100%);
+    background: linear-gradient(0deg, #666eb9 0%, #2c48c7 100%);
     border: none;
 }
 
 #start-button:hover {
     background: rgb(0, 3, 255);
-    background: linear-gradient(0deg, rgb(241, 37, 1) 7%, rgb(248, 118, 95) 93%);
+    background: linear-gradient(0deg, rgb(1, 5, 241) 7%, rgb(98, 95, 248) 93%);
 }
 
 #stop-button:hover {
     background: rgb(0, 3, 255);
-    background: linear-gradient(0deg, rgb(241, 37, 1) 7%, rgb(248, 118, 95) 93%);
+    background: linear-gradient(0deg, rgb(1, 5, 241) 7%, rgb(98, 95, 248) 93%);
 }
 
 #reset-button:hover {
     background: rgb(0, 3, 255);
-    background: linear-gradient(0deg, rgb(241, 37, 1) 7%, rgb(248, 118, 95) 93%);
+    background: linear-gradient(0deg, rgb(1, 5, 241) 7%, rgb(98, 95, 248) 93%);
 }
 
 /* Breakpoint para dispositivos móviles */
 @media screen and (max-width: 500px) {
-    body {
-        background-position: center bottom;
-        background-size: contain;
-        
-    }
     .container {
         flex-direction: column;
     }
@@ -142,6 +142,10 @@ body {
 
     .counter {
         font-size: 1.2em;
+    }
+
+    body {
+        background-position-y: 12cm;
     }
 }
 

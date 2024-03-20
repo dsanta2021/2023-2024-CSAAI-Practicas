@@ -33,7 +33,7 @@ function updateSecretDisplay() {
             displayHTML += '<span style="color: #03c8a8;">' + secretKey[i] + '</span>';
         } else {
             // De lo contrario, mostrar en rojo
-            displayHTML += '<span style="color: #FF6347;">*</span>';
+            displayHTML += '<span style="color: #e6150e;">*</span>';
         }
     }
     secretKeyDisplay.innerHTML = displayHTML;
@@ -55,9 +55,9 @@ function checkGuess(guess) {
     if (guessedState.every(state => state) && !gameFinished) {
         crono.stop();
         gameFinished = true;
+        alert("¡¡GENAIL!! ¡¡GANASTE!!\nCON UN Tiempo: " + cronometroDisplay.innerHTML);
     }
 }
-
 
 // Event listener para los botones de números
 numberButtons.forEach(button => {
