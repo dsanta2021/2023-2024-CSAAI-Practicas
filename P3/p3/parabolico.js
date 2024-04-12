@@ -24,8 +24,8 @@ const timerDisplay = document.getElementById("timer");
 const ctx = canvas.getContext("2d");
 
 // Canvas dimensions
-canvas.width = 900;
-canvas.height = 500;
+canvas.width = 850;
+canvas.height = 450;
 
 // Declaración de variables y objetos
 let xop = 50;        // Coordenadas iniciales del proyectil
@@ -35,21 +35,20 @@ let yp = yop;
 let objH, objW;      // Altura y anchura del proyectil
 
 let xomin = 250;    // Coordenadas iniciales del objetivo
-let xomax = 770;
+let xomax = 800;
 let xo = getRandomXO(xomin, xomax); // Posición aleatoria del objetivo
-let yo = 470;
+let yo = 420;
 let radius = 25;      // Radio del objetivo
 
-let velp = speedSldr.value;      // Velocidad inicial del proyectil
-let ang = angleSldr.value;    // Ángulo inicial de disparo en grados
+let velp = speedSldr.value;      // Velocidad del proyectil
+let ang = angleSldr.value;    // Ángulo de disparo en grados
 const grav = 9.8;       // Aceleración de la gravedad
-let time = 0;     // Tiempo de vuelo del proyectil
+let time = 0;     // Tiempo de vuelo proyectil
 
-let controlBtn = false; // Control de botón de disparo
-let win = false;  // Control de victoria
-let colision = false; // Control de colisión
+let controlBtn = false; // Control de botón lanzar
+let win = false;  // Control victoria
+let colision = false; // Control  colisión
 let colisionX, colisionY;   // Coordenadas de colisión
-
 
 
 // Funciones auxiliares
@@ -59,13 +58,12 @@ function getRandomXO(min, max) {
 
 // Función para pintar el proyectil
 function dibujarP(x, y, lx, ly) {
+    objH = y;
+    objW = x;
     ctx.beginPath();
     ctx.rect(x, y, lx, ly);
     ctx.drawImage(ball, x, y, 30, 30)
     ctx.closePath();
-
-    objH = y;
-    objW = x;
 }
 
 // Función para pintar el objetivo
@@ -77,9 +75,13 @@ function dibujarO(x, y, img) {
 }
 
 function dibujarTiroP() {
-    xp = xop + velp * Math.cos(ang * Math.PI / 180) * time; //Se calcula posición x del proyectil
-    yp = yop + velp * Math.sin(ang * Math.PI / 180) * time - 0.5 * grav * time * time; //Se calcula posición y del proyectil
-    time += 0.1; //La simulación avanza cada 0.1 segundos, para más lento disminuir éste número
+    if (angleSldr.value == 90) {
+        ang = 89;   // Evita el bug del 90
+    }
+
+    xp = xop + velp * Math.cos(ang * Math.PI / 180) * time; // Posición x proyectil
+    yp = yop + velp * Math.sin(ang * Math.PI / 180) * time - (0.5 * grav * time * time); // Posición y proyectil
+    time += 0.1; 
 }
 
 // Función principal de actualización
@@ -96,10 +98,8 @@ function lanzar() {
         colision = true;
         win = false;
     }
-    console.log(colision);
-    console.log(win);
 
-    // Verificación de colisión entre proyectil-objetivo
+    // Verificación colisión proyectil-objetivo
     colisionX = xp + 25;
     colisionY = (canvas.height - yp) + 25;
     distancia = Math.sqrt((xo - colisionX) * (xo - colisionX) + (yo - colisionY) * (yo - colisionY));
@@ -113,9 +113,7 @@ function lanzar() {
     dibujarTiroP();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
     dibujarO(xo, yo, basket);
-
     dibujarP(xp, canvas.height - yp, 50, 50);
 
     // Verificación de si se debe seguir el bucle
@@ -123,6 +121,7 @@ function lanzar() {
         requestAnimationFrame(lanzar);
     }
 
+    // Verificar perder
     if (colision == true && win == false) {
         crono.stop();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -130,6 +129,8 @@ function lanzar() {
         ctx.fillStyle = 'red'
         ctx.fillText("Has Perdido", 170, 250);
     }
+
+    // Verificar ganar
     if (colision == true && win == true) {
         crono.stop();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -143,8 +144,10 @@ function lanzar() {
 // Eventos
 document.onkeydown = function (ev) {
     switch (ev.key) {
-        case " ": 
+        case " ":
             if (!controlBtn) {
+                lanzar_audio.currentTime = 0;
+                lanzar_audio.play();
                 crono.start();
                 lanzar();
                 controlBtn = true;
@@ -194,5 +197,5 @@ basket.onload = () => {
 };
 
 // Inicialización
-dibujarP(xop, yop, 50, 50); // Pintar el proyectil
+dibujarP(xop, canvas.height - yop, 50, 50); // Pintar el proyectil
 dibujarO(xo, yo, basket); // Pintar el objetivo
