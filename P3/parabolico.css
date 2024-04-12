@@ -180,7 +180,8 @@ h2 {
 #counter-display {
   text-align: center;
   display: block;
-  font-family: Arial rgb(4, 4, 4);
+  font-family: Arial;
+  color: rgb(4, 4, 4);
   font-weight: bold;
   font-size: 25px;
   background: #44412d;
@@ -268,7 +269,7 @@ h2 {
  
   .controls {
     width: 100%;
-    padding: 0 20px; /
+    padding: 0 20px; 
   }
 
   .btn-container {
