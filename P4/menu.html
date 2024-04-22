@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory - Menú</title>
+    <link rel="stylesheet" href="stylesMenu.css" />
+</head>
+
+<body>
+    <div class="menu-container">
+        <h1>¿Has jugado alguna vez a Memory?</h1>
+        <div class="options">
+            <button id="yes-btn">Si</button>
+            <button id="no-btn">No</button>
+        </div>
+        <div id="username-input" style="display: none;">
+            <input type="text" id="username" placeholder="Introduce tu usuario">
+            <button id="submit-username">Enviar</button>
+        </div>
+        <div id="board-size" style="display: none;">
+            <h2>Elige el tamaño del tablero:</h2>
+            <div class="options">
+                <button id="size-2">2x2</button>
+                <button id="size-4">4x4</button>
+                <button id="size-6">6x6</button>
+                <button id="size-8">8x8</button>
+            </div>
+            <button id="play-btn" style="display: none;">JUGAR</button>
+        </div>
+    </div>
+
+    <div class="DataBase">
+        <ul id="user-list">
+            <!-- Usuarios -->
+        </ul>
+        
+    </div>
+    <script src="menu.js" defer></script>
+</body>
+
+</html>
