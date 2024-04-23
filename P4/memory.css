@@ -1,3 +1,4 @@
+/* Estilos generales */
 @font-face {
     font-family: Montserrat;
     src: url('./Montserrat-Regular.ttf');
@@ -6,7 +7,6 @@
 html {
     width: 100%;
     height: 100%;
-    /* background: linear-gradient(325deg,  #6f00fc 0%,#fc7900 50%,#fcc700 100%); */
     font-family: Montserrat;
     background-image: url('fondo2.webp');
     background-size: cover;
@@ -20,15 +20,9 @@ html {
 }
 
 .controles {
-    position: relative;
-    top: 20px; /* Ajusta la posición verticalmente */
-    left: 50%;
-    transform: translateX(-80%);
     display: flex;
-    flex-direction: column; /* Cambia la dirección a columna para que estén uno debajo del otro */
-    align-items: center; 
-    margin-bottom: 30px;
-    margin-top: 50px;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 button {
@@ -40,7 +34,6 @@ button {
     cursor: pointer;
     font-family: Montserrat;
     font-size: 18pt;
-    margin-bottom: 20px;
 }
 
 .disabled {
@@ -48,31 +41,16 @@ button {
 }
 
 .display {
-    position: absolute;
-    top: 20px;
-    left: 60%;
-    transform: translateX(90%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centra los elementos horizontalmente */
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 25px;
-}
-
-.timer {
-    margin-bottom: 10px; /* Ajusta el margen inferior del primer display */
-    color: #1c48a7;
-}
-
-.movimientos {
-    margin-top: 10px; /* Ajusta el margen superior del segundo display */
-    color: #993bd8;
+    color: #282A3A;
+    font-size: 14pt;
 }
 
 .grid-container-wrapper {
-    position: relative;
-    bottom: 20px;
-    left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 100px 0;
     overflow: hidden;
 }
 
@@ -84,7 +62,6 @@ button {
 .win {
     border-radius: 5px;
     box-shadow: 0 25px 50px rgb(33 33 33 / 25%);
-    /* background: linear-gradient(135deg,  #6f00fc 0%,#fc7900 50%,#fcc700 100%); */
     transition: transform .6s cubic-bezier(0.4, 0.0, 0.2, 1);
     backface-visibility: hidden;
 }
@@ -92,8 +69,7 @@ button {
 .tablero {
     padding: 40px;
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /*Para dimensions = 6*/
-    grid-template-rows: repeat(auto, 1fr); 
+    grid-template-columns: repeat(10, 1fr);
     grid-gap: 20px;
     background-image: url('tablero.jpg');
     background-size: cover;
@@ -101,7 +77,6 @@ button {
     height: auto;
     border: 3px solid black;
 }
-
 
 .grid-container.flipped .tablero {
     transform: rotateY(180deg) rotateZ(50deg);
@@ -124,31 +99,23 @@ button {
     border-radius: 5px;
     width: 100%;
     height: 100%;
-    background: #282A3A;
     transition: transform .6s cubic-bezier(0.4, 0.0, 0.2, 1);
     backface-visibility: hidden;
 }
 
-.card-back {
-    font-size: 28pt;
-    text-align: center;
-    line-height: 100px;
+.card-back.emoji {
     background: #FDF8E6;
-    transform: rotateY(180deg) rotateZ(50deg);
-    user-select: none;
-    /* Ocultar el texto */
-    color: transparent;
-    text-shadow: none;
 }
 
-.card-front {
-    position: absolute;
+.card-back.image {
+    background-color: transparent;
+}
+
+.card-back.image img {
     width: 100%;
     height: 100%;
-    background-image: url('dibujo.jpg');
-    background-size: cover;
+    object-fit: cover;
 }
-
 
 .card.flipped .card-front {
     transform: rotateY(180deg) rotateZ(50deg);

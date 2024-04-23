@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory</title>
-    <link rel="stylesheet" href="stylesMemory.css" />
+    <link rel="stylesheet" href="stylesMemoryF.css" />
     <script src="memory.js" defer></script>
     <script src="crono.js"></script>
 </head>
@@ -15,19 +15,22 @@
     <div class="game">
         <div class="controles">
             <button id="btnComenzar">Comenzar</button>
+            <button id="btnReiniciar">Riniciar</button>
             <div class="display">
                 <div class="movimientos">0 movimientos</div>
                 <div class="timer">tiempo: 0 sec</div>
             </div>
-            <button id="btnReiniciar">Riniciar</button>
         </div>
         <div class="grid-container-wrapper">
             <div class="grid-container">
-                <div class="tablero" grid-dimension="6" game-mode="z"></div>
+                <div class="tablero" grid-dimension="4" game-mode="f"></div>
                 <div class="win">¡Has Ganado!</div>
             </div>
         </div>
-    </div>
+        <div class="fin-options">
+            <button id="btnVJugar" style="display: none;">Volver a Jugar</button>
+            <button id="btnMenu" style="display: none;">Menú Principal</button>
+        </div>
     </div>
     
 </body>

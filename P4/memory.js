@@ -3,9 +3,14 @@ const selectors = {
     tablero: document.querySelector('.tablero'),
     movimientos: document.querySelector('.movimientos'),
     timer: document.querySelector('.timer'),
-    comenzar: document.getElementById('btnComenzar'),
+    comenzar: document.querySelector('button'),
     win: document.querySelector('.win'),
-    reiniciar: document.getElementById('btnReiniciar')
+    menu: document.getElementById('btnMenu'),
+    volJugar: document.getElementById('btnVJugar'),
+    start: document.getElementById('btnComenzar'),
+    restart: document.getElementById('btnReiniciar'),
+    dispMove: document.querySelector('.movimientos'),
+    dispTime: document.querySelector('.timer')
 }
 
 const state = {
@@ -16,33 +21,59 @@ const state = {
     loop: null
 }
 
-// Función para obtener el parámetro de tamaño del tablero de la URL
-function obtenerTamañoTableroDeURL() {
+// Función para obtener tamaño y modo de la URL
+function obtenerDataURL() {
     const url = window.location.href;
-    const parametros = url.split('?')[1]; // Divide la URL en partes y obtiene la parte después del signo de interrogación
+    const parametros = url.split('?'); // Divide la URL en partes y obtiene la parte después del signo de interrogación
+    console.log(parametros);
     if (parametros) {
-        const paresParametros = parametros.split('&');
-        for (let i = 0; i < paresParametros.length; i++) {
-            const parametro = paresParametros[i].split('=');
+        let size = null;
+        let mode = null;
+        for (let i = 0; i < parametros.length; i++) {
+            const parametro = parametros[i].split('=');
             if (parametro[0] === 'size') { // Verifica si el nombre del parámetro es 'size'
-                return parametro[1]; // Devuelve el valor del parámetro de tamaño del tablero
+                size = parametro[1]; // Guarda el valor del parámetro de tamaño del tablero
+            } else if (parametro[0] === 'mode') { // Verifica si el nombre del parámetro es 'mode'
+                mode = parametro[1]; // Guarda el valor del parámetro de modo
             }
         }
+        return [size, mode]; // Devuelve un objeto con los valores de size y mode
     }
-    return null; // Devuelve null si no se encuentra el parámetro de tamaño del tablero en la URL
+    return null; // Devuelve null si no se encuentran los parámetros de tamaño del tablero y modo en la URL
 }
 
 // Obtener el tamaño del tablero de la URL
-const tamañoTablero = obtenerTamañoTableroDeURL();
-console.log('Tamaño del tablero obtenido de la URL:', tamañoTablero);
+const data = obtenerDataURL();
+console.log('Tamaño del tablero obtenido de la URL:', data);
 
 const generateGame = () => {
-    var dimensions = 0;
+    //-- Creamos un array con los emojis que vamos a utilizar en nuestro juego
+    const emojis = [
+        '🥔', '🍒', '🥑', '🌽', '🥕', '🍇', '🍉', '🍌', '🥭', '🍍',
+        '🍈', '🍊', '🍋', '🍎', '🍄', '🍐', '🍑', '🍓', '🫐', '🥝',
+        '🍅', '🫒', '🥥', '🍆', '🌶️', '🫑', '🥒', '🥬', '🥦', '🧄',
+        '🥜', '🫛']
 
-    if (tamañoTablero == 2 || tamañoTablero == 4 || tamañoTablero == 6 || tamañoTablero == 8) {
-        dimensions = tamañoTablero;
+    const tarot = [
+        '0.jpg', '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg',
+        '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', 
+        '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg'
+    ]
+
+    var dimensions = 0;
+    var gameMode = '';
+
+    if (data[0] == 2 || data[0] == 4 || data[0] == 6) {
+        dimensions = data[0];
     } else {
         dimensions = selectors.tablero.getAttribute('grid-dimension');
+    }
+
+    if (data[1] == 'f' || data[1] == 't') {
+        gameMode = data[1];
+        console.log(gameMode);
+    } else {
+        gameMode = selectors.tablero.getAttribute('game-mode');
     }
 
     //-- Nos aseguramos de que el número de dimensiones es par
@@ -51,32 +82,71 @@ const generateGame = () => {
         throw new Error("Las dimensiones del tablero deben ser un número par.")
     }
 
-    //-- Creamos un array con los emojis que vamos a utilizar en nuestro juego
-    const emojis = ['🥔', '🍒', '🥑', '🌽', '🥕', '🍇', '🍉', '🍌', '🥭', '🍍', '🥔', '🍒', '🥑', '🌽', '🥕', '🍇', '🍉', '🍌', '🥭', '🍍']
-    
-    //-- Elegimos un subconjunto de emojis al azar, así cada vez que comienza el juego
-    // es diferente.
-    // Es decir, si tenemos un array con 10 emojis, vamos a elegir el cuadrado de las
-    // dimensiones entre dos, para asegurarnos de que cubrimos todas las cartas
-    const picks = pickRandom(emojis, (dimensions * dimensions) / 2) 
+    if (gameMode == 'f') {
+        const picks = pickRandom(emojis, (dimensions * dimensions) / 2)
 
-    //-- Después descolocamos las posiciones para asegurarnos de que las parejas de cartas
-    // están desordenadas.
-    const items = shuffle([...picks, ...picks])
-    
-    //-- Vamos a utilizar una función de mapeo para generar 
-    //  todas las cartas en función de las dimensiones
-    const cards = `
-        <div class="tablero" style="grid-template-columns: repeat(${dimensions}, auto)">
-            ${items.map(item => `
-                <div class="card">
-                    <div class="card-front"></div>
-                    <div class="card-back">${item}</div>
-                </div>
-            `).join('')}
-       </div>
-    `
-    
+        //-- Después descolocamos las posiciones para asegurarnos de que las parejas de cartas
+        // están desordenadas.
+        const items = shuffle([...picks, ...picks])
+
+        //-- Vamos a utilizar una función de mapeo para generar 
+        //  todas las cartas en función de las dimensiones
+        var cards = `
+            <div class="tablero" style="grid-template-columns: repeat(${dimensions}, auto)">
+                ${items.map(item => `
+                    <div class="card">
+                        <div class="card-front"></div>
+                        <div class="card-back">${item}</div>
+                    </div>
+                `).join('')}
+           </div>
+        `
+    } else if (gameMode == 't') {
+        const picks = pickRandom(tarot, (dimensions * dimensions) / 2)
+
+        //-- Después descolocamos las posiciones para asegurarnos de que las parejas de cartas
+        // están desordenadas.
+        const items = shuffle([...picks, ...picks])
+        if (dimensions == 2) {
+            var cards = `
+            <div class="tablero" style="grid-template-columns: repeat(4, auto)">
+                ${items.map(item => `
+                    <div class="card">
+                        <div class="card-front"></div>
+                        <div class="card-back">${item}</div>
+                        <div class="card-back"><img src="${item}" alt="zodiaco"></div>
+                    </div>
+                `).join('')}
+           </div>
+        `
+        } else if (dimensions == 4) {
+            var cards = `
+            <div class="tablero" style="grid-template-columns: repeat(8, auto)">
+                ${items.map(item => `
+                    <div class="card">
+                        <div class="card-front"></div>
+                        <div class="card-back">${item}</div>
+                        <div class="card-back"><img src="${item}" alt="zodiaco"></div>
+                    </div>
+                `).join('')}
+           </div>
+        `
+        } else if (dimensions == 6) {
+            var cards = `
+            <div class="tablero">
+                ${items.map(item => `
+                    <div class="card">
+                        <div class="card-front"></div>
+                        <div class="card-back">${item}</div>
+                        <div class="card-back"><img src="${item}" alt="zodiaco"></div>
+                    </div>
+                `).join('')}
+           </div>
+        `
+        } 
+        
+    }
+
     //-- Vamos a utilizar un parser para transformar la cadena que hemos generado
     // en código html.
     const parser = new DOMParser().parseFromString(cards, 'text/html')
@@ -90,7 +160,7 @@ const pickRandom = (array, items) => {
     // La sintaxis de tres puntos nos sirve para hacer una copia del array
     const clonedArray = [...array]
     // Random picks va almacenar la selección al azar de emojis
-    const randomPicks = [] 
+    const randomPicks = []
 
     for (let index = 0; index < items; index++) {
         const randomIndex = Math.floor(Math.random() * clonedArray.length)
@@ -135,8 +205,8 @@ const attachEventListeners = () => {
         // Cuando se trata de una carta que no está girada, le damos la vuelta para mostrarla
         if (eventTarget.className.includes('card') && !eventParent.className.includes('flipped')) {
             flipCard(eventParent)
-        // Pero si lo que ha pasado es un clic en el botón de comenzar lo que hacemos es
-        // empezar el juego
+            // Pero si lo que ha pasado es un clic en el botón de comenzar lo que hacemos es
+            // empezar el juego
         } else if (eventTarget.nodeName === 'BUTTON' && !eventTarget.className.includes('disabled')) {
             if (eventTarget.id === 'btnComenzar') {
                 startGame()
@@ -145,6 +215,14 @@ const attachEventListeners = () => {
             }
         }
     })
+
+    // Ajustar el tamaño de las imágenes dentro de las cartas
+    const cardBackImages = document.querySelectorAll('.card-back img');
+    cardBackImages.forEach(img => {
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+    });
 }
 
 // Generamos el juego
@@ -206,7 +284,7 @@ const flipCard = card => {
         // y para eso llamamos a la función flipBackCards()
         setTimeout(() => {
             flipBackCards()
-        }, 1000)
+        }, 800)
     }
 
     // Antes de terminar, comprobamos si quedan cartas por girar
@@ -216,6 +294,13 @@ const flipCard = card => {
         setTimeout(() => {
             // Le damos la vuelta al tablero
             selectors.gridContainer.classList.add('flipped')
+
+            // Se eliminan los elementos que no se quieren mostrar
+            selectors.dispMove.style.display = 'none';
+            selectors.dispTime.style.display = 'none';
+            selectors.start.style.display = 'none';
+            selectors.restart.style.display = 'none';
+
             // Le mostramos las estadísticas del juego
             selectors.win.innerHTML = `
                 <span class="win-text">
@@ -226,6 +311,10 @@ const flipCard = card => {
             `
             // Paramos el loop porque el juego ha terminado
             clearInterval(state.loop)
+
+            // Opciones para volver a jugar
+            selectors.menu.style.display = 'block';
+            selectors.volJugar.style.display = 'block';
         }, 1000)
     }
 }
@@ -240,3 +329,11 @@ const flipBackCards = () => {
     state.flippedCards = 0
 }
 
+// Finish Events
+selectors.menu.addEventListener('click', function (event) {
+    window.location.href = 'index.html';
+});
+
+selectors.restart.addEventListener('click', function (event) {
+    location.reload();
+});

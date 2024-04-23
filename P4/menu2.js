@@ -1,3 +1,58 @@
+let usersData = []; // Array para almacenar los datos de los usuarios
+
+document.getElementById('fileInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function() {
+        const content = reader.result;
+        processData(content);
+    };
+
+    // Leer el contenido del archivo como texto
+    reader.readAsText(file);
+});
+
+function processData(content) {
+    // Dividir el contenido del archivo por líneas
+    const lines = content.split('\n');
+    
+    // Procesar cada línea
+    lines.forEach(line => {
+        // Dividir cada línea en los datos relevantes
+        const userData = {};
+        const data = line.split('-');
+        data.forEach(item => {
+            const [key, value] = item.split(':');
+            userData[key.trim()] = value.trim();
+        });
+        
+        // Agregar los datos del usuario al array
+        usersData.push(userData);
+    });
+
+    console.log(usersData); // Mostrar los datos de los usuarios en la consola (solo para verificar)
+}
+
+// Función para buscar un usuario por nombre
+function findUserByName(name) {
+    return usersData.find(user => user.Name === name);
+}
+
+// Función para agregar un nuevo usuario
+function addUser(name, game, movements, time) {
+    const newUser = {
+        Name: name,
+        Game: game,
+        Movements: movements,
+        Time: time
+    };
+    usersData.push(newUser);
+    console.log('Usuario añadido:', newUser); // Mostrar el usuario añadido en la consola (solo para verificar)
+}
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const yesBtn = document.getElementById('yes-btn');
     const noBtn = document.getElementById('no-btn');
@@ -7,15 +62,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const boardSize = document.getElementById('board-size');
     const userList = document.getElementById('user-list');
 
-    // Función para cargar los nombres de usuario desde el JSON
+ /*   // Función para cargar los nombres de usuario desde el JSON
     function loadUsernames() {
-        return fetch('dataBase.json')
-            .then(response => response.json())
-            .then(data => data.usuarios)
-            .catch(error => {
-                console.error('Error al cargar el archivo JSON:', error);
-                return [];
-            });
+        const users = JSON.parse(dataBase.json)
     }
 
     // Función para guardar los nombres de usuario en el JSON
@@ -47,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return saveUsernames(usernames);
                 }
             });
-    }
+    }*/
 
     // Lógica cuando se hace clic en "Sí"
     yesBtn.addEventListener('click', function () {

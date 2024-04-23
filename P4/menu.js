@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitUsernameBtn = document.getElementById('submit-username');
     const boardSize = document.getElementById('board-size');
     const userList = document.getElementById('user-list');
+    const gameMode = document.getElementById('game-mode');
+    const fruits = document.getElementById('fruits-btn');
+    const zodiac = document.getElementById('zodiac-btn');
+
+    var boardTam = 0;
+    var mode = '';
 
     // Lógica para buscar un nombre de usuario
     function searchUsername(username) {
@@ -53,21 +59,39 @@ document.addEventListener('DOMContentLoaded', function () {
     // Lógica para elegir el tamaño del tablero
     boardSize.addEventListener('click', function (event) {
         if (event.target.tagName === 'BUTTON') {
-            const boardSize = event.target.id.split('-')[1];
+            var boardSize = event.target.id.split('-')[1];
+            boardTam = boardSize;
             console.log(boardSize);
-            // Aquí puedes llamar a la función para comenzar el juego con el tamaño del tablero seleccionado
-            startGame(boardSize);
+            gameMode.style.display = 'block';
         }
     });
 
+    fruits.addEventListener('click', function (event) {
+        mode = 'f'; 
+        startGame();
+
+    });
+
+    zodiac.addEventListener('click', function (event) {
+        mode = 't';
+        startGame();
+
+    });
+
     // Función para comenzar el juego con el tamaño del tablero seleccionado
-    function startGame(boardSize) {
+    function startGame() {
         // Muestra el botón "JUGAR"
         document.getElementById('play-btn').style.display = 'block';
 
         // Event listener del botón "JUGAR" para redirigir al juego principal
         document.getElementById('play-btn').addEventListener('click', function () {
-            window.location.href = `memory.html?size=${boardSize}`; // Redirige al juego principal mediante url
+            if (mode == 'f') {
+                window.location.href = `memoryF.html?size=${boardTam}?mode=${mode}`; // Redirige al juego principal mediante url
+                //window.location.href = `memory.html?size=${boardTam}?mode=${mode}`; // Redirige al juego principal mediante url
+            } else if (mode == 't') {
+                window.location.href = `memoryZ.html?size=${boardTam}?mode=${mode}`; // Redirige al juego principal mediante url
+            }
+           
         });
 
     }

@@ -9,6 +9,10 @@
     margin-top: 20px;
 }
 
+.DataBase {
+    display: none;
+}
+
 button {
     background: #282A3A;
     color: #FFF;
