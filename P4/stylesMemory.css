@@ -69,6 +69,22 @@ button {
     color: #993bd8;
 }
 
+.fin-options {
+    position: relative;
+    bottom: 20px; /* Ajusta la posición verticalmente */
+    left: 50%;
+    transform: translateX(-35%);
+    display: flex;
+    flex-direction: row; /* Cambia la dirección a columna para que estén uno debajo del otro */
+    align-items: center; 
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+#btnVJugar, #btnMenu {
+    margin-left: 20px;
+}
+
 .grid-container-wrapper {
     position: relative;
     bottom: 20px;

@@ -337,3 +337,7 @@ selectors.menu.addEventListener('click', function (event) {
 selectors.restart.addEventListener('click', function (event) {
     location.reload();
 });
+
+selectors.volJugar.addEventListener('click', function (event) {
+    location.reload();
+});

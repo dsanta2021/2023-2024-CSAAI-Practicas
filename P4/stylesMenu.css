@@ -1,43 +1,91 @@
+html {
+    background-image: url('fondoMenu.gif');
+    background-size: cover;
+}
+
 .menu-container {
     text-align: center;
     margin-top: 100px;
 }
 
-.options {
+.menu-title {
+    font-size: 60px;
+    color: #e63a8a;
+    margin-bottom: 20px;
+}
+
+.styled-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+.styled-btn:hover {
+    background: #45a049;
+}
+
+.styled-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    font-size: 12px;
+    width: 200px; /* Ajustamos el ancho de la cuadrícula */
+}
+
+.play-btn-style {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 30px;
+    margin-top: 30px;
+    cursor: pointer;
+    font-size: 24px;
+    transition: background 0.3s;
+}
+
+#username-input, #board-size, #game-mode {
+    margin-top: 20px; /* Aumentamos el margen superior */
+}
+
+#game-mode {
+    margin-top: 20px; /* Aumentamos el margen superior */
+    position: relative; /* Establecemos la posición relativa */
+}
+
+#game-theme {
+    position: absolute; /* Fijamos la posición absoluta */
+    top: 100%; /* Colocamos la sección debajo de los botones de modo */
+    left: 50%; /* Centramos horizontalmente */
+    transform: translateX(-50%); /* Centramos horizontalmente */
+    margin-top: 20px; /* Añadimos un poco de margen superior */
+}
+
+#board-size, #game-mode {
+    margin-top: 20px; /* Ajustamos el margen superior */
+}
+
+#board-size .options,
+#game-mode .options {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    flex-wrap: wrap; /* Para permitir que los elementos se coloquen en múltiples líneas si es necesario */
+    margin-top: 20px; /* Centramos y agregamos margen superior */
 }
 
-.DataBase {
-    display: none;
+#board-size .options button,
+#game-mode .options button {
+    margin: 10px; /* Ajustamos el margen entre los botones */
 }
 
-button {
-    background: #282A3A;
-    color: #FFF;
-    border-radius: 5px;
-    padding: 10px 20px;
-    border: 0;
-    cursor: pointer;
-    font-family: Montserrat;
-    font-size: 18pt;
-    margin: 0 10px;
-}
-
-#play-btn {
-    background: #282A3A;
-    color: #FFF;
-    border-radius: 5px;
-    padding: 10px 20px;
-    border: 0;
-    cursor: pointer;
-    font-family: Montserrat;
-    font-size: 18pt;
-    margin: 0 10px;
-    position: absolute;
-}
-
-#username-input, #board-size {
-    margin-top: 30px;
+.play-btn-style {
+    display: block;
+    margin: 160px auto 0; /* Centramos el botón de Jugar */
 }

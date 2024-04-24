@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,46 +7,47 @@
     <title>Memory - Menú</title>
     <link rel="stylesheet" href="stylesMenu.css" />
 </head>
-
 <body>
     <div class="menu-container">
-        <h1>¿Has jugado alguna vez a Memory?</h1>
+        <h1 class="menu-title">¡Bienvenido a Memory!</h1>
         <div class="options">
-            <button id="yes-btn">Si</button>
-            <button id="no-btn">No</button>
+            <h2>¿Has jugado alguna vez?</h2>
+            <button id="yes-btn" class="styled-btn">¡Sí, por supuesto!</button>
+            <button id="no-btn" class="styled-btn">No, nunca</button>
         </div>
         <div id="username-input" style="display: none;">
-            <input type="text" id="username" placeholder="Introduce tu usuario">
-            <button id="submit-username">Enviar</button>
+            <input type="text" id="username" class="styled-input" placeholder="Introduce tu usuario">
+            <button id="submit-username" class="styled-btn">Enviar</button>
         </div>
         <div id="board-size" style="display: none;">
             <h2>Elige el tamaño del tablero:</h2>
             <div class="options">
-                <button id="size-2">2x2</button>
-                <button id="size-4">4x4</button>
-                <button id="size-6">6x6</button>
+                <button id="size-2" class="styled-btn">2x2</button>
+                <button id="size-4" class="styled-btn">4x4</button>
+                <button id="size-6" class="styled-btn">6x6</button>
             </div>
         </div>
         <div id="game-mode" style="display: none;">
-            <h2>Elige el modo de juego:</h1>
+            <h2>Elige el modo de juego:</h2>
             <div class="options">
-                <button id="fruits-btn">Frutas</button>
-                <button id="zodiac-btn">El Tarot</button>
+                <button id="normal-btn" class="styled-btn" style="display: none;">Normal</button>
+                <button id="contrarreloj-btn" class="styled-btn" style="display: none;">Contrarreloj</button>
+                <div id="game-theme" style="display: none;">
+                    <h2>Elige el tema del juego:</h2>
+                    <div class="options">
+                        <button id="fruits-btn" class="styled-btn" style="display: none;">Frutas</button>
+                        <button id="tarot-btn" class="styled-btn" style="display: none;">El Tarot</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <button id="play-btn" style="display: none;">JUGAR</button>
+        <button id="play-btn" class="play-btn-style" style="display: none;">¡A jugar!</button>
     </div>
-
     <div class="DataBase">
         <ul id="user-list">
             <!-- Usuarios -->
         </ul>
-
-        <!-- <span id="fileName">dataBase.txt</span>
-        <pre id="fileContent"></pre> -->
-
     </div>
     <script src="menu.js" defer></script>
 </body>
-
 </html>
