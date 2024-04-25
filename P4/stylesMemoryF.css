@@ -18,19 +18,20 @@ html {
     transform: translate(-50%, -50%);
 }
 
-.controls {
+.controles {
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .fin-options {
     position: relative;
-    bottom: 20px; /* Ajusta la posición verticalmente */
+    bottom: 20px; 
     left: 50%;
     transform: translateX(-40%);
     display: flex;
-    flex-direction: row; /* Cambia la dirección a columna para que estén uno debajo del otro */
+    flex-direction: row;
     align-items: center; 
     margin-bottom: 30px;
     margin-top: 50px;
@@ -68,7 +69,7 @@ button {
 .win {
     border-radius: 5px;
     box-shadow: 0 25px 50px rgb(33 33 33 / 25%);
-    /* background: linear-gradient(135deg,  #6f00fc 0%,#fc7900 50%,#fcc700 100%); */
+    background: linear-gradient(135deg,  #2c5a26 0%,#1cb830 50%,#00fcbd 100%); 
     transition: transform .6s cubic-bezier(0.4, 0.0, 0.2, 1);
     backface-visibility: hidden;
 }

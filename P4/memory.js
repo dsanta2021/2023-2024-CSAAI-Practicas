@@ -85,7 +85,7 @@ const generateGame = () => {
     }
 
     var mode_value = data[2].split(':');
-    console.log(mode_value);
+    
     if (mode_value[0] == 'c') {
         let segundosIniciales = mode_value[1];
         selectors.timer.innerText = `Tiempo: ${segundosIniciales} segundos`;
@@ -313,9 +313,10 @@ const startGame = () => {
         selectors.movimientos.innerText = `${movimientosMaximos} movimientos`;
 
         state.loop = setInterval(() => {
-            state.totalTime++
+            
             // Si el juego no ha terminado y quedan movimientos disponibles
             if (state.gameStarted && state.totalFlips < movimientosMaximos) {
+                state.totalTime++
                 // Actualizamos el contador de movimientos en el display
                 selectors.timer.innerText = `Tiempo: ${state.totalTime} segundos`
                 selectors.movimientos.innerText = `${movimientosMaximos - state.totalFlips} movimientos`;

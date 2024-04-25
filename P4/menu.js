@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var boardTam = 0;
     var mode = '';
     var theme = '';
-    var usurname;
+    var username;
     var time = 0;
     var moves = 0;
     var modeValue = 0;
@@ -62,10 +62,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lógica para enviar el nombre de usuario
     submitUsernameBtn.addEventListener('click', function () {
-        usurname = usernameField.value;
-        boardSize.style.display = 'block';
-        menu.style.display = 'none';
-        usernameInput.style.display = 'none';
+        username = usernameField.value;
+        if (username == '') {
+            usernameInput.style.display = 'block';
+        } else {
+            boardSize.style.display = 'block';
+            menu.style.display = 'none';
+            usernameInput.style.display = 'none';
+        }
+
 
         // Para base de datos
         // Aquí se verifica si el nombre de usuario existe en la base de datos
@@ -93,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fruits.style.display = 'block';
             tarot.style.display = 'block';
         }
-        
+
     });
 
     submitMovesBtn.addEventListener('click', function () {
@@ -106,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fruits.style.display = 'block';
             tarot.style.display = 'block';
         }
-        
+
     });
 
 
@@ -158,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function startGame() {
         // Muestra el botón "JUGAR"
         document.getElementById('play-btn').style.display = 'block';
-        
+
         //var modeValue = parseInt(time) + parseInt(moves);
         console.log(boardSize, theme, mode, time, moves, modeValue);
 
