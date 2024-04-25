@@ -10,7 +10,7 @@
 <body>
     <div class="menu-container">
         <h1 class="menu-title">¡Bienvenido a Memory!</h1>
-        <div class="options">
+        <div id="menu-options" class="options" style="display: block;">
             <h2>¿Has jugado alguna vez?</h2>
             <button id="yes-btn" class="styled-btn">¡Sí, por supuesto!</button>
             <button id="no-btn" class="styled-btn">No, nunca</button>
@@ -32,6 +32,7 @@
             <div class="options">
                 <button id="normal-btn" class="styled-btn" style="display: none;">Normal</button>
                 <button id="contrarreloj-btn" class="styled-btn" style="display: none;">Contrarreloj</button>
+                <button id="limitedMoves-btn" class="styled-btn" style="display: none;">Nº movimientros máximo</button>
                 <div id="game-theme" style="display: none;">
                     <h2>Elige el tema del juego:</h2>
                     <div class="options">
@@ -40,14 +41,21 @@
                     </div>
                 </div>
             </div>
+            <div id="seconds-input" style="display: none;">
+                <input type="text" id="seconds" class="styled-input" placeholder="Introduce los segundos con los que quieres jugar">
+                <button id="submit-seconds" class="styled-btn">Enviar</button>
+            </div>
+            <div id="moves-input" style="display: none;">
+                <input type="text" id="moves" class="styled-input" placeholder="Introduce los movimientos con los que quieres jugar">
+                <button id="submit-moves" class="styled-btn">Enviar</button>
+            </div>
         </div>
         <button id="play-btn" class="play-btn-style" style="display: none;">¡A jugar!</button>
     </div>
-    <div class="DataBase">
-        <ul id="user-list">
-            <!-- Usuarios -->
+    <!-- <div class="DataBase">
+        <ul id="user-list"> 
         </ul>
-    </div>
+    </div> -->
     <script src="menu.js" defer></script>
 </body>
 </html>

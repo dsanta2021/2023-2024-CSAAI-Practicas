@@ -28,16 +28,19 @@ function obtenerDataURL() {
     console.log(parametros);
     if (parametros) {
         let size = null;
+        let theme = null;
         let mode = null;
         for (let i = 0; i < parametros.length; i++) {
             const parametro = parametros[i].split('=');
             if (parametro[0] === 'size') { // Verifica si el nombre del parámetro es 'size'
                 size = parametro[1]; // Guarda el valor del parámetro de tamaño del tablero
-            } else if (parametro[0] === 'mode') { // Verifica si el nombre del parámetro es 'mode'
-                mode = parametro[1]; // Guarda el valor del parámetro de modo
+            } else if (parametro[0] === 'theme') { // Verifica si el nombre del parámetro es 'mode'
+                theme = parametro[1]; // Guarda el valor del parámetro de modo
+            } else if (parametro[0] === 'mode') {
+                mode = parametro[1];
             }
         }
-        return [size, mode]; // Devuelve un objeto con los valores de size y mode
+        return [size, theme, mode]; // Devuelve un objeto con los valores de size y mode
     }
     return null; // Devuelve null si no se encuentran los parámetros de tamaño del tablero y modo en la URL
 }
@@ -56,12 +59,12 @@ const generateGame = () => {
 
     const tarot = [
         '0.jpg', '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg',
-        '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', 
+        '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg',
         '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg'
     ]
 
     var dimensions = 0;
-    var gameMode = '';
+    var gameTheme = '';
 
     if (data[0] == 2 || data[0] == 4 || data[0] == 6) {
         dimensions = data[0];
@@ -70,10 +73,9 @@ const generateGame = () => {
     }
 
     if (data[1] == 'f' || data[1] == 't') {
-        gameMode = data[1];
-        console.log(gameMode);
+        gameTheme = data[1];
     } else {
-        gameMode = selectors.tablero.getAttribute('game-mode');
+        gameTheme = selectors.tablero.getAttribute('game-mode');
     }
 
     //-- Nos aseguramos de que el número de dimensiones es par
@@ -82,7 +84,17 @@ const generateGame = () => {
         throw new Error("Las dimensiones del tablero deben ser un número par.")
     }
 
-    if (gameMode == 'f') {
+    var mode_value = data[2].split(':');
+    console.log(mode_value);
+    if (mode_value[0] == 'c') {
+        let segundosIniciales = mode_value[1];
+        selectors.timer.innerText = `Tiempo: ${segundosIniciales} segundos`;
+    } else if (mode_value[0] == 'm') {
+        let movimientosMaximos = mode_value[1];
+        selectors.movimientos.innerText = `${movimientosMaximos} movimientos`;
+    }
+
+    if (gameTheme == 'f') {
         const picks = pickRandom(emojis, (dimensions * dimensions) / 2)
 
         //-- Después descolocamos las posiciones para asegurarnos de que las parejas de cartas
@@ -101,7 +113,7 @@ const generateGame = () => {
                 `).join('')}
            </div>
         `
-    } else if (gameMode == 't') {
+    } else if (gameTheme == 't') {
         const picks = pickRandom(tarot, (dimensions * dimensions) / 2)
 
         //-- Después descolocamos las posiciones para asegurarnos de que las parejas de cartas
@@ -143,8 +155,8 @@ const generateGame = () => {
                 `).join('')}
            </div>
         `
-        } 
-        
+        }
+
     }
 
     //-- Vamos a utilizar un parser para transformar la cadena que hemos generado
@@ -155,6 +167,7 @@ const generateGame = () => {
     // para el tablero de juego.
     selectors.tablero.replaceWith(parser.querySelector('.tablero'))
 }
+
 
 const pickRandom = (array, items) => {
     // La sintaxis de tres puntos nos sirve para hacer una copia del array
@@ -237,15 +250,101 @@ const startGame = () => {
     // Desactivamos el botón de comenzar
     selectors.comenzar.classList.add('disabled')
 
-    // Comenzamos el bucle de juego
-    // Cada segundo vamos actualizando el display de tiempo transcurrido
-    // y movimientos
-    state.loop = setInterval(() => {
-        state.totalTime++
+    var mode_value = data[2].split(':');
+    console.log(mode_value);
 
-        selectors.movimientos.innerText = `${state.totalFlips} movimientos`
-        selectors.timer.innerText = `tiempo: ${state.totalTime} sec`
-    }, 1000)
+    if (mode_value[0] == 'n') {
+        // Comenzamos el bucle de juego
+        // Cada segundo vamos actualizando el display de tiempo transcurrido
+        // y movimientos
+        state.loop = setInterval(() => {
+            state.totalTime++
+
+            selectors.movimientos.innerText = `${state.totalFlips} movimientos`
+            selectors.timer.innerText = `Tiempo: ${state.totalTime} segundos`
+        }, 1000)
+
+    } else if (mode_value[0] == 'c') {
+        // Obtenemos el número de segundos desde los parámetros de la URL
+        let segundosIniciales = mode_value[1];
+        // Comenzamos el bucle de juego
+        // Cada segundo vamos actualizando el display de tiempo transcurrido
+        // y movimientos
+        state.loop = setInterval(() => {
+            // Decrementamos el contador de tiempo
+            segundosIniciales--;
+            console.log(segundosIniciales);
+
+            // Actualizamos el contador de tiempo en el display
+            selectors.timer.innerText = `Tiempo: ${segundosIniciales} segundos`;
+
+            // Si el tiempo llega a 0, el jugador ha perdido
+            if (segundosIniciales === 0) {
+                // Mostramos el mensaje de derrota
+                // Detenemos el bucle de juego
+
+                // Le damos la vuelta al tablero
+                selectors.gridContainer.classList.add('flipped');
+
+                // Se eliminan los elementos que no se quieren mostrar
+                selectors.dispMove.style.display = 'none';
+                selectors.dispTime.style.display = 'none';
+                selectors.start.style.display = 'none';
+                selectors.restart.style.display = 'none';
+
+                // Mostramos el mensaje de derrota
+                selectors.win.innerHTML = `
+                    <span class="win-text">
+                     ¡Has perdido!<br />
+                        Se acabó el tiempo.
+                    </span>`;
+
+                clearInterval(state.loop);
+
+                // Opciones para volver a jugar
+                selectors.menu.style.display = 'block';
+                selectors.volJugar.style.display = 'block';
+            }
+        }, 1000);
+        
+    } else if (mode_value[0] == 'm') {
+        let movimientosMaximos = mode_value[1]; 
+
+        selectors.movimientos.innerText = `${movimientosMaximos} movimientos`;
+
+        state.loop = setInterval(() => {
+            state.totalTime++
+            // Si el juego no ha terminado y quedan movimientos disponibles
+            if (state.gameStarted && state.totalFlips < movimientosMaximos) {
+                // Actualizamos el contador de movimientos en el display
+                selectors.timer.innerText = `Tiempo: ${state.totalTime} segundos`
+                selectors.movimientos.innerText = `${movimientosMaximos - state.totalFlips} movimientos`;
+            } else if (state.totalFlips >= movimientosMaximos) {
+                // Si se alcanza el número máximo de movimientos, mostramos el mensaje de pérdida
+                // Le damos la vuelta al tablero
+                selectors.gridContainer.classList.add('flipped');
+
+                // Se eliminan los elementos que no se quieren mostrar
+                selectors.dispMove.style.display = 'none';
+                selectors.dispTime.style.display = 'none';
+                selectors.start.style.display = 'none';
+                selectors.restart.style.display = 'none';
+
+                // Mostramos el mensaje de derrota
+                selectors.win.innerHTML = `
+                    <span class="win-text">
+                     ¡Has perdido!<br />
+                        Se han agotado los movimientos.
+                    </span>`;
+
+                clearInterval(state.loop);
+
+                // Opciones para volver a jugar
+                selectors.menu.style.display = 'block';
+                selectors.volJugar.style.display = 'block';
+            }
+        }, 100);
+    }
 }
 
 const flipCard = card => {
@@ -253,7 +352,7 @@ const flipCard = card => {
     state.flippedCards++
     // Sumamos uno al contador general de movimientos
     state.totalFlips++
-
+    
     // Si el juego no estaba iniciado, lo iniciamos
     if (!state.gameStarted) {
         startGame()

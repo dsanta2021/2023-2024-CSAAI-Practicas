@@ -1,5 +1,5 @@
 html {
-    background-image: url('fondoMenu.gif');
+    background-image: url('fondoMenu.webp');
     background-size: cover;
 }
 
@@ -83,6 +83,19 @@ html {
 #board-size .options button,
 #game-mode .options button {
     margin: 10px; /* Ajustamos el margen entre los botones */
+}
+
+#seconds-input,
+#moves-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#seconds-input button,
+#moves-input button {
+    margin-top: 10px;
 }
 
 .play-btn-style {
