@@ -152,7 +152,7 @@ button {
 
 @media screen and (max-width: 768px) {
   body {
-    background-image: url("fondo.jpg");
+    background-image: url("fondoMovil.jpg");
     background-size: auto;
   }
 
@@ -205,7 +205,7 @@ button {
   }
 
   .container {
-    max-width: 24%;
+    width: 24%;
     position: relative;
     transform: translate(-60%, -20%);
     background-color: rgba(255, 255, 255, 0.7);
@@ -214,7 +214,7 @@ button {
   }
 
   .table-container {
-    max-width: 40%;
+    width: 40%;
     position: relative;
     transform: translate(250%, -193%);
     overflow: hidden;
