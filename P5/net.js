@@ -307,13 +307,13 @@ function drawNetImages(nnodes, rutaMinima) {
             if (nodo === nodoOrigen || nodo === nodoDestino) {
                 ctx.drawImage(computer, nodo.x - 35, nodo.y - 64, 75, 75);
             } else {
-                ctx.drawImage(router, nodo.x - 35, nodo.y - 60, 75, 75);
+                ctx.drawImage(router, nodo.x - 35, nodo.y - 50, 60, 60);
             }
             ctx.textAlign = 'center';
             ctx.fillStyle = 'blue';
             ctx.font = 'bold 15px Arial';
             nodoDesc = "N" + nodo.id + " - Delay: " + Math.floor(nodo.delay);
-            ctx.fillText(nodoDesc, nodo.x, nodo.y + 14);
+            ctx.fillText(nodoDesc, nodo.x, nodo.y + 20);
             ctx.closePath();
             
         } else {
