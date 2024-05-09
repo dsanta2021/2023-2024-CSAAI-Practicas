@@ -262,14 +262,14 @@ function drawNetImages(nnodes, rutaMinima) {
         conexionesRutaMinima.add(`${nodoActual.id}-${nodoSiguiente.id}`);
         conexionesRutaMinima.add(`${nodoSiguiente.id}-${nodoActual.id}`);
     }
-    
+
     // Dibujamos las conexiones entre nodos
     nnodes.forEach(nodo => {
         nodo.conexiones.forEach(({ nodo: conexion, peso }) => {
             ctx.beginPath();
             ctx.moveTo(nodo.x, nodo.y);
             ctx.lineTo(conexion.x, conexion.y);
-            
+
             // Verificar si la conexión pertenece a la ruta mínima 
             const estaEnRutaMinima = conexionesRutaMinima.has(`${nodo.id}-${conexion.id}`) || conexionesRutaMinima.has(`${conexion.id}-${nodo.id}`);
             if (estaEnRutaMinima) {
@@ -285,7 +285,7 @@ function drawNetImages(nnodes, rutaMinima) {
             }
             ctx.stroke();
 
-            
+
             ctx.textAlign = 'center';
             pw = "N" + nodo.id + " pw " + peso;
             const midX = Math.floor((nodo.x + conexion.x) / 2);
@@ -301,22 +301,21 @@ function drawNetImages(nnodes, rutaMinima) {
         ctx.beginPath();
         ctx.arc(nodo.x, nodo.y, nodeRadius, 0, 2 * Math.PI);
         const esRutaMinima = rutaMinima.includes(nodo);
-        
+
         if (esRutaMinima) {
             if (nodo === nodoOrigen || nodo === nodoDestino) {
                 ctx.drawImage(computer, nodo.x - 35, nodo.y - 64, 75, 75);
             } else {
                 ctx.drawImage(router, nodo.x - 35, nodo.y - 60, 75, 75);
             }
-            ctx.closePath();
             ctx.textAlign = 'center';
+            ctx.fillStyle = 'blue';
+            ctx.font = 'bold 15px Arial';
             nodoDesc = "N" + nodo.id + " - Delay: " + Math.floor(nodo.delay);
             ctx.fillText(nodoDesc, nodo.x, nodo.y + 14);
             
-            ctx.font = 'bold 15px Arial';
-            ctx.fillStyle = 'blue';
         } else {
-            ctx.fillStyle = 'blue';
+            ctx.fillStyle = 'purple';
             ctx.fill();
             ctx.stroke();
             ctx.font = '12px Arial';
@@ -325,7 +324,9 @@ function drawNetImages(nnodes, rutaMinima) {
             nodoDesc = "N" + nodo.id + " delay " + Math.floor(nodo.delay);
             ctx.fillText(nodoDesc, nodo.x, nodo.y + 5);;
         }
-        
+
+        ctx.closePath();
+
     });
 }
 
@@ -353,6 +354,7 @@ numNodesInput.addEventListener('input', function () {
     numNodes = this.value;
     document.getElementById("num_nodos_value").textContent = numNodes;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    generated = false;
 });
 
 // Event listener para los nodos iniciales
