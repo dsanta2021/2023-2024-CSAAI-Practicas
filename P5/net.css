@@ -3,6 +3,7 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
   background-image: url("fondo.jpg");
+  background-color: #070f31;
   background-repeat: no-repeat;
   background-size: cover;
 }
