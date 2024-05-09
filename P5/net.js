@@ -219,6 +219,8 @@ function drawNet(nnodes) {
             ctx.beginPath();
             ctx.moveTo(nodo.x, nodo.y);
             ctx.lineTo(conexion.x, conexion.y);
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 1;
             ctx.stroke();
 
             ctx.font = '12px Arial';
@@ -312,19 +314,20 @@ function drawNetImages(nnodes, rutaMinima) {
             ctx.font = 'bold 15px Arial';
             nodoDesc = "N" + nodo.id + " - Delay: " + Math.floor(nodo.delay);
             ctx.fillText(nodoDesc, nodo.x, nodo.y + 14);
+            ctx.closePath();
             
         } else {
             ctx.fillStyle = 'purple';
             ctx.fill();
-            ctx.stroke();
             ctx.font = '12px Arial';
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center';
             nodoDesc = "N" + nodo.id + " delay " + Math.floor(nodo.delay);
             ctx.fillText(nodoDesc, nodo.x, nodo.y + 5);;
+            ctx.closePath();
         }
 
-        ctx.closePath();
+        
 
     });
 }
