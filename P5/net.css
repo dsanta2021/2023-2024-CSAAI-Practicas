@@ -108,7 +108,7 @@ button {
   max-width: 155px;
   margin-top: 20px;
   font-size: 18px;
-  text-align: flex-start;
+  text-align: start;
 }
 
 #message {

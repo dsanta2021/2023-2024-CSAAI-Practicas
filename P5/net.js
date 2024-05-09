@@ -16,7 +16,6 @@ const ctx = canvas.getContext('2d');
 
 let redAleatoria;
 let nodoOrigen = 0, nodoDestino = 0;
-let rutaMinimaConRetardos;
 let generated = false;
 
 const nodeRadius = 40;
@@ -225,7 +224,7 @@ function drawNet(nnodes) {
             ctx.font = '12px Arial';
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
-            pw = "N" + nodo.id + " pw " + peso;
+            var pw = "N" + nodo.id + " pw " + peso;
             const midX = Math.floor((nodo.x + conexion.x) / 2);
             const midY = Math.floor((nodo.y + conexion.y) / 2);
             ctx.fillText(pw, midX, midY);
@@ -287,7 +286,7 @@ function drawNetImages(nnodes, rutaMinima) {
 
 
             ctx.textAlign = 'center';
-            pw = "N" + nodo.id + " pw " + peso;
+            var pw = "N" + nodo.id + " pw " + peso;
             const midX = Math.floor((nodo.x + conexion.x) / 2);
             const midY = Math.floor((nodo.y + conexion.y) / 2);
             ctx.fillText(pw, midX, midY);
