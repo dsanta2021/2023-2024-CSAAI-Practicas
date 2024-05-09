@@ -1,3 +1,15 @@
+// Localizando elementos en el DOM
+const btnCNet = document.getElementById("btnCNet");
+const btnMinPath = document.getElementById("btnMinPath");
+const nodoDisplay = document.getElementById("nodos");
+const timeDisplay = document.getElementById("time");
+const msgDisplay = document.getElementById("message");
+const initialDiv = document.getElementById("initial");
+const finalDiv = document.getElementById("final");
+const router = document.getElementById("router");
+const computer = document.getElementById("computer");
+var numNodesInput = document.getElementById("num_nodos");
+
 // Variables de trabajo
 const canvas = document.getElementById('networkCanvas');
 const ctx = canvas.getContext('2d');
@@ -8,17 +20,13 @@ let rutaMinimaConRetardos;
 let generated = false;
 
 const nodeRadius = 40;
-const numNodos = 5;
 const nodeConnect = 2;
 const nodeRandomDelay = 1000;
 const pipeRandomWeight = 100; // No hay retardo entre nodos 100
 
-// Localizando elementos en el DOM
-const btnCNet = document.getElementById("btnCNet");
-const btnMinPath = document.getElementById("btnMinPath");
-const nodoDisplay = document.getElementById("nodos");
-const timeDisplay = document.getElementById("time");
-const msgDisplay = document.getElementById("message");
+var numNodes = numNodesInput.value;
+var initialNode;
+var finalNode;
 
 // Clase para representar un nodo en el grafo
 class Nodo {
@@ -168,7 +176,6 @@ function crearRedAleatoriaConCongestion(numNodos, numConexiones) {
     // Seleccionamos tantos nodos como indica la variable numConexiones
     // El nodo será candidato siempre que no estén ya conectados
     for (let nodo of nodos) {
-        //console.log("id: " + nodo.id + " distancia al nodo: " + nodo.node_distance(nodos[0].x, nodos[0].y));
 
         const clonedArray = [...nodos];
 
@@ -207,6 +214,7 @@ function randomNumber(min, max) {
 // Dibujar la red en el canvas
 function drawNet(nnodes) {
     // Dibujamos las conexiones entre nodos
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     nnodes.forEach(nodo => {
         nodo.conexiones.forEach(({ nodo: conexion, peso }) => {
             ctx.beginPath();
@@ -242,41 +250,233 @@ function drawNet(nnodes) {
     });
 }
 
-// Función de calback para generar la red de manera aleatoria
-btnCNet.onclick = () => {
-
-    // Generar red de nodos con congestión creada de manera aleatoria redAleatoria
-    // Cada nodo tendrá un delay aleatorio para simular el envío de paquetes de datos
-    redAleatoria = crearRedAleatoriaConCongestion(numNodos, nodeConnect);
-    generated = true;
-
+function drawNetImages(nnodes, rutaMinima) {
     // Limpiamos el canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Dibujar la red que hemos generado
-    drawNet(redAleatoria);
-    nodoDisplay.innerHTML = 'Nodos: ' + numNodos;
-    timeDisplay.innerHTML = 'Tiempo total: ' + 0 + ' sec';
-    msgDisplay.innerHTML = 'Red generada.';
+    // Creamos un conjunto de conexiones en la ruta mínima
+    const conexionesRutaMinima = new Set();
+    for (let i = 0; i < rutaMinima.length - 1; i++) {
+        const nodoActual = rutaMinima[i];
+        const nodoSiguiente = rutaMinima[i + 1];
+        conexionesRutaMinima.add(`${nodoActual.id}-${nodoSiguiente.id}`);
+        conexionesRutaMinima.add(`${nodoSiguiente.id}-${nodoActual.id}`);
+    }
+    
+    // Dibujamos las conexiones entre nodos
+    nnodes.forEach(nodo => {
+        nodo.conexiones.forEach(({ nodo: conexion, peso }) => {
+            ctx.beginPath();
+            ctx.moveTo(nodo.x, nodo.y);
+            ctx.lineTo(conexion.x, conexion.y);
+            
+            // Verificar si la conexión pertenece a la ruta mínima 
+            const estaEnRutaMinima = conexionesRutaMinima.has(`${nodo.id}-${conexion.id}`) || conexionesRutaMinima.has(`${conexion.id}-${nodo.id}`);
+            if (estaEnRutaMinima) {
+                ctx.strokeStyle = 'green'; // Línea verde para conexiones en la ruta mínima
+                ctx.lineWidth = 3;
+                ctx.font = 'bold 13px Arial';
+                ctx.fillStyle = 'blue';
+            } else {
+                ctx.strokeStyle = 'black'; // Línea negra para conexiones fuera de la ruta mínima
+                ctx.lineWidth = 1;
+                ctx.font = '10px Arial';
+                ctx.fillStyle = 'black';
+            }
+            ctx.stroke();
 
+            
+            ctx.textAlign = 'center';
+            pw = "N" + nodo.id + " pw " + peso;
+            const midX = Math.floor((nodo.x + conexion.x) / 2);
+            const midY = Math.floor((nodo.y + conexion.y) / 2);
+            ctx.fillText(pw, midX, midY);
+        });
+    });
+
+    let nodoDesc; // Descripción del nodo
+
+    // Dibujamos los nodos
+    nnodes.forEach(nodo => {
+        ctx.beginPath();
+        ctx.arc(nodo.x, nodo.y, nodeRadius, 0, 2 * Math.PI);
+        const esRutaMinima = rutaMinima.includes(nodo);
+        
+        if (esRutaMinima) {
+            if (nodo === nodoOrigen || nodo === nodoDestino) {
+                ctx.drawImage(computer, nodo.x - 35, nodo.y - 64, 75, 75);
+            } else {
+                ctx.drawImage(router, nodo.x - 35, nodo.y - 60, 75, 75);
+            }
+            ctx.closePath();
+            ctx.textAlign = 'center';
+            nodoDesc = "N" + nodo.id + " - Delay: " + Math.floor(nodo.delay);
+            ctx.fillText(nodoDesc, nodo.x, nodo.y + 14);
+            
+            ctx.font = 'bold 15px Arial';
+            ctx.fillStyle = 'blue';
+        } else {
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            ctx.stroke();
+            ctx.font = '12px Arial';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            nodoDesc = "N" + nodo.id + " delay " + Math.floor(nodo.delay);
+            ctx.fillText(nodoDesc, nodo.x, nodo.y + 5);;
+        }
+        
+    });
 }
 
+// Función para encontrar nodos conectados directa o indirectamente
+function findConnectedNodes(red, origen, destino) {
+    const visited = new Set();
+    const origin = [origen.id];
+    while (origin.length > 0) {
+        const nodeId = origin.shift();
+        const node = red[nodeId];
+        if (node === destino) {
+            return [node];
+        }
+        visited.add(nodeId);
+        for (const { nodo } of node.conexiones) {
+            if (!visited.has(nodo.id) && !origin.includes(nodo.id)) {
+                origin.push(nodo.id);
+            }
+        }
+    }
+    return [];
+}
+
+numNodesInput.addEventListener('input', function () {
+    numNodes = this.value;
+    document.getElementById("num_nodos_value").textContent = numNodes;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// Event listener para los nodos iniciales
+initialDiv.addEventListener('change', function () {
+    const initialNodeInputs = document.querySelectorAll('.initial_node');
+    initialNodeInputs.forEach(input => {
+        if (input.checked) {
+            initialNode = input.value;
+        }
+    });
+});
+
+finalDiv.addEventListener('change', function () {
+    const finalNodeInputs = document.querySelectorAll('.final_node');
+    finalNodeInputs.forEach(input => {
+        if (input.checked) {
+            finalNode = input.value;
+        }
+    });
+});
+
+// Función de calback para generar la red de manera aleatoria
+btnCNet.onclick = () => {
+    if (numNodes >= 1 & numNodes <= 5) {
+        // Generar red de nodos con congestión creada de manera aleatoria redAleatoria
+        // Cada nodo tendrá un delay aleatorio para simular el envío de paquetes de datos
+        redAleatoria = crearRedAleatoriaConCongestion(numNodes, nodeConnect);
+        generated = true;
+        initialNode = null;
+        finalNode = null;
+
+        // Limpiamos el canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Dibujar la red que hemos generado
+        drawNet(redAleatoria);
+        nodoDisplay.innerHTML = 'Nodos: ' + numNodes;
+        timeDisplay.innerHTML = 'Tiempo total: ' + 0 + ' sec';
+        msgDisplay.innerHTML = 'Red generada.';
+        msgDisplay.style.color = 'green';
+
+        initialDiv.style.display = 'block';
+        finalDiv.style.display = 'block';
+
+        // Actualizar los radios de entrada para el nodo inicial
+        initialDiv.innerHTML = '<h3>Nodo inicial</h3>';
+        for (let i = 0; i <= numNodes - 1; i++) {
+            initialDiv.innerHTML += '<input type="radio" name="initial_node" class="initial_node" value="' + i + '"> ' + i;
+        }
+
+        // Actualizar los radios de entrada para el nodo final
+        finalDiv.innerHTML = '<h3>Nodo final</h3>';
+        for (let i = 0; i <= numNodes - 1; i++) {
+            finalDiv.innerHTML += '<input type="radio" name="final_node" class="final_node" value="' + i + '"> ' + i;
+        }
+
+        // Llenar la tabla con la información de los nodos
+        const tablaInfo = document.querySelector('.info');
+        tablaInfo.style.display = 'block';
+        tablaInfo.innerHTML = ''; // Limpiar la tabla
+
+        // Agregar fila de encabezado
+        const headerRow = tablaInfo.insertRow();
+        const headerCell1 = headerRow.insertCell(0);
+        const headerCell2 = headerRow.insertCell(1);
+        const headerCell3 = headerRow.insertCell(2);
+        headerCell1.textContent = 'Nodo';
+        headerCell2.textContent = 'Delay (ms)';
+        headerCell3.textContent = 'Conexiones';
+
+        headerCell1.style.fontWeight = 'bold';
+        headerCell2.style.fontWeight = 'bold';
+        headerCell3.style.fontWeight = 'bold';
+
+        // Agregar filas a la tabla para cada nodo
+        redAleatoria.forEach(nodo => {
+            const row = tablaInfo.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+            cell1.textContent = 'N' + nodo.id;
+            cell2.textContent = nodo.delay.toFixed(0);
+            let conexiones = nodo.conexiones.map(conexion => 'N' + conexion.nodo.id).join(', ');
+            cell3.textContent = conexiones;
+        })
+    }
+    else {
+        generated = false;
+    }
+
+}
 
 btnMinPath.onclick = () => {
 
     if (generated == false) {
         msgDisplay.innerHTML = 'La red no está generada. Cree primero la red.';
-    } 
+        msgDisplay.style.color = 'red';
+    }
     else if (generated == true) {
-        // Supongamos que tienes una red de nodos llamada redAleatoria y tienes nodos origen y destino
-        nodoOrigen = redAleatoria[0]; // Nodo de origen
-        nodoDestino = redAleatoria[numNodos - 1]; // Nodo de destino
+        if (initialNode == null || finalNode == null) {
+            msgDisplay.innerHTML = 'Nodo inicial y final no elegios. Escoja el nodo inicial y final.';
+            msgDisplay.style.color = 'red';
+        } else {
+            // Supongamos que tienes una red de nodos llamada redAleatoria y tienes nodos origen y destino
+            nodoOrigen = redAleatoria[parseInt(initialNode)]; // Nodo de origen
+            nodoDestino = redAleatoria[parseInt(finalNode)]; // Nodo de destino
 
-        // Calcular la ruta mínima entre el nodo origen y el nodo destino utilizando Dijkstra con retrasos
-        const {ruta, totalDelay, nodos} = dijkstraConRetardos(redAleatoria, nodoOrigen, nodoDestino);
-        console.log("Ruta mínima con retrasos:", ruta);
-        console.log("Tiempo total:", totalDelay);
-        msgDisplay.innerHTML = 'Ruta mínima calculada.';
-        timeDisplay.innerHTML = 'Tiempo total: ' + totalDelay + ' sec';
+            const connectedNodes = findConnectedNodes(redAleatoria, nodoOrigen, nodoDestino);
+
+            if (connectedNodes.length > 0) {
+                // Calcular la ruta mínima entre el nodo origen y el nodo destino utilizando Dijkstra con retrasos
+                const { ruta, totalDelay } = dijkstraConRetardos(redAleatoria, nodoOrigen, nodoDestino);
+                console.log("Ruta mínima con retrasos:", ruta);
+                console.log("Tiempo total:", totalDelay);
+                msgDisplay.innerHTML = 'Ruta mínima calculada. Ruta: ' + ruta.map(node => 'N' + node.id).join(' ➟ ');
+                timeDisplay.innerHTML = 'Tiempo total: ' + totalDelay + ' sec';
+                drawNetImages(redAleatoria, ruta);
+            } else {
+                msgDisplay.innerHTML = 'No existe conexión entre el nodo origen y el destino. Pruebe con otros nodos.';
+                msgDisplay.style.color = 'red';
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+        }
+
     }
 }

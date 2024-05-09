@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +12,49 @@
     <script src="net.js" defer></script>
 
 </head>
+
 <body>
-    <div class="controls">
-        <button id="btnCNet">Generar Red</button>
-        <button id="btnMinPath">Calcular ruta</button>
+    <h1 id="titulo">Simulando la Red</h1>
+    <div class="canvas-container">
+        <canvas id="networkCanvas" width="1000" height="600"></canvas>
+        <div class="buttons">
+            <button id="btnCNet">Generar Red</button>
+            <button id="btnMinPath">Calcular ruta</button>
+        </div>
     </div>
-    <div class="displays">
-        <div id="nodos">Nodos: 0</div>
-        <div id="time">Tiempo total: 0 sec</div>
-        <div id="message"> </div>
+
+    <div class="container">
+        <div class="options">
+            <div id="num-nodes-container">
+                <h3>Número de nodos</h3>
+                <input type="range" id="num_nodos" min="1" max="5" value="1.1" step="1">
+                <span id="num_nodos_value">1</span>
+            </div>
+
+            <div class="select-node" id="initial" style="display: none;">
+                <h3>Nodo inicial</h3>
+            </div>
+
+            <div class="select-node" id="final" style="display: none;">
+                <h3>Nodo final</h3>
+            </div>
+
+            <div class="displays">
+                <div id="nodos">Nodos: 0</div>
+                <div id="time">Tiempo total: 0 sec</div>
+                <div id="message"> </div>
+            </div>
+        </div>
     </div>
-    <canvas id="networkCanvas" width="800" height="400"></canvas>
+
+    <div class="table-container">
+        <table class="info" style="display: none;">
+            <!-- La tabla se llenará dinámicamente mediante JavaScript -->
+        </table>
+    </div>
+
+    <img class="net" id="router" src="router.png" style="display:none;">
+    <img class="net" id="computer" src="monitor.png" style="display:none;">
 </body>
+
 </html>

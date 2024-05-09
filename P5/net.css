@@ -1,20 +1,223 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url("fondo.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#titulo {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  margin-top: 30px;
+  font-size: 40px;
+  text-transform: uppercase;
+  /*Texto a mayúsculas */
+  letter-spacing: 2px;
+  text-shadow: 4px 4px 6px rgba(231, 8, 45, 0.5);
+}
+
 canvas {
-    border: 1px solid black;
+  border: 1px solid black;
+  background-image: url("canvas.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.canvas-container {
+  position: relative;
+  width: 1000px;
+  margin: 30px auto;
+  display: block;
+}
+
+button {
+  background: #282A3A;
+  color: #FFF;
+  border-radius: 2px;
+  padding: 10px 20px;
+  border: 0;
+  cursor: pointer;
+  font-family: Fredoka;
+  font-size: 18pt;
+  margin-bottom: 10px;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.options {
+  max-width: 180px;
+  min-width: 175px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+#num_nodos {
+  -webkit-appearance: none;
+  width: 85%;
+  height: 10px;
+  background: linear-gradient(to right, #00b7ff, #42b17d);
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+#num_nodos::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #a955ac;
+  border-radius: 50%;
+  border: 3px solid #963ebe;
+  cursor: pointer;
+}
+
+.select-node {
+  max-width: 174px;
+  background-color: #5983af;
+  color: #fff;
+  padding: 6px 0px;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  cursor: pointer;
+  outline: none;
+  margin-top: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.select-node:hover {
+  border-color: #0d2cb9;
+  /* Borde blanco al pasar el ratón o enfocar */
+}
+
+.displays {
+  max-width: 155px;
+  margin-top: 20px;
+  font-size: 18px;
+  text-align: flex-start;
+}
+
+#message {
+  margin-top: 10px;
+}
+
+.table-container {
+  position: absolute;
+  top: 50%;
+  right: 90.5%; /* Ajusta según la posición deseada del canvas */
+  transform: translate(50%, -50%);
+}
+
+.info {
+  margin-top: 20px;
+  margin-right: 20px;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  background-color: rgba(4, 4, 95, 0.5);
+  color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  /* Evitar que los bordes redondeados se solapen con los bordes de la tabla */
+}
+
+.info td,
+.info th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.info th:first-child,
+.info td:first-child {
+  border-left: none;
+}
+
+.info th:last-child,
+.info td:last-child {
+  border-right: none;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    background-image: url("fondo.jpg");
+    background-size: auto;
   }
-  
-  .controls {
+
+  canvas {
+    width: 60%;
+  }
+
+  .canvas-container {
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: block;
+  }
+
+  .container {
+    width: 24%;
+    position: relative;
+    transform: translate(-60%, -1%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .options {
+    max-width: 90%;
+    min-width: 80%;
     display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
   }
   
-  button {
-    background: #282A3A;
-    color: #FFF;
-    border-radius: 2px;
-    padding: 10px 20px;
-    border: 0;
-    cursor: pointer;
-    font-family: Fredoka;
-    font-size: 18pt;
+  .table-container {
+    width: 40%;
+    position: relative;
+    transform: translate(270%, -200%);
+    overflow: hidden;
   }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1496px) {
+  body {
+    background-image: url("fondo.jpg");
+    background-size: auto;
+  }
+
+  canvas {
+    width: 80%;
+    margin-left: 200px;
+  }
+
+  .container {
+    max-width: 24%;
+    position: relative;
+    transform: translate(-60%, -20%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .table-container {
+    max-width: 40%;
+    position: relative;
+    transform: translate(250%, -193%);
+    overflow: hidden;
+  }
+
+}
